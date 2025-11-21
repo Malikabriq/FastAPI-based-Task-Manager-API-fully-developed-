@@ -1,58 +1,142 @@
-# FastAPI Task Manager 🚀
+# FastAPI Task Manager API Fully developed.
 
-[![Python](https://img.shields.io/badge/python-3.12-blue)](https://www.python.org/)
-[![FastAPI](https://img.shields.io/badge/FastAPI-0.100.0-green)](https://fastapi.tiangolo.com/)
-[![License](https://img.shields.io/badge/license-MIT-yellow)](LICENSE)
-
-A **FastAPI-based Task Manager API** for creating, tracking, updating, and deleting tasks. Integrated with **PostgreSQL** via SQLAlchemy, featuring computed fields for `progress` and `verdict`.
+A fully developed **Task Manager API** built with **FastAPI**, including user roles, permissions, admin management, and secure password reset.
 
 ---
 
-## Features ✨
+## 🚀 Features
 
-- CRUD operations for tasks
-- Task details: title, description, priority, status, estimated hours, hours spent
-- Computed fields: `progress`, `verdict`
-- Input validation with **Pydantic**
-- Modular folder structure for scalability
-- PostgreSQL database integration
+* **Task Management**:
+
+  * Create, update, delete, and list tasks
+* **Admin User Management**:
+
+  * Admins can perform **CRUD operations on users**
+  * Assign **roles and permissions** to users and admin
+* **User Roles & Permissions**:
+
+  * Role-based access control (RBAC)
+  * Certain endpoints accessible only to admin or specific roles
+* **Forgot Password / Password Reset**:
+
+  * Users can reset password using **PIN sent via email**
+* User Authentication (JWT-based)
+* Auto-generated Swagger UI documentation
 
 ---
 
-## Quick Start ⚡
+## 📦 Installation
 
-### 1️⃣ Clone the repository
+### 1. Clone the repository
+
 ```bash
-git clone https://github.com/<your-username>/fastapi-task-manager.git
-cd fastapi-task-manager
-2️⃣ Set up virtual environment
+git clone https://github.com/Malikabriq/FastAPI-based-Task-Manager-API-fully-developed-.git
+cd FastAPI-based-Task-Manager-API-fully-developed-
+```
+
+### 2. Create & activate virtual environment
+
+```bash
 python -m venv venv
-# Activate
-# Windows (PowerShell)
-.\venv\Scripts\Activate.ps1
-# Mac/Linux
+```
+
+**Windows:**
+
+```bash
+venv\Scripts\activate
+```
+
+**Linux/Mac:**
+
+```bash
 source venv/bin/activate
-3️⃣ Install dependencies
+```
+
+### 3. Install dependencies
+
+```bash
 pip install -r requirements.txt
-4️⃣ Configure environment variables
-Create a .env file with your PostgreSQL credentials:
-DATABASE_URL=postgresql://username:password@host:port/dbname
-5️⃣ Run the app
-uvicorn app.main:app --reload
-API Endpoints 🔗
-| Method | Endpoint    | Description         |
-| ------ | ----------- | ------------------- |
-| POST   | /tasks/     | Create a new task   |
-| GET    | /tasks/     | Get all tasks       |
-| PUT    | /tasks/{id} | Update a task by ID |
-| DELETE | /tasks/{id} | Delete a task by ID |
-Dependencies:
-FastAPI
+```
 
-SQLAlchemy
+---
 
-psycopg2-binary
+## ▶️ Run the API
 
-Pydantic
+```bash
+uvicorn main:app --reload
+```
 
-Uvicorn
+Open the API docs at:
+
+```
+http://127.0.0.1:8000/docs
+```
+
+---
+
+## 📁 Project Structure (example)
+
+```
+my_task_manager/
+│── app/
+│   ├── main.py
+│   ├── models.py
+│   ├── routers/
+│   │   ├── tasks.py
+│   │   └── users.py   # admin CRUD, roles & permissions, forgot password
+│   ├── schemas.py
+│   └── database.py
+│── requirements.txt
+│── README.md
+│── .gitignore
+```
+
+---
+
+## 🔑 Admin & User Notes
+
+### Admin CRUD & Roles
+
+| Action      | Method | Endpoint           | Description                                 |
+| ----------- | ------ | ------------------ | ------------------------------------------- |
+| Create User | POST   | `/users/`          | Assign role & permissions on creation       |
+| Read User   | GET    | `/users/{user_id}` | View user info and role                     |
+| Update User | PUT    | `/users/{user_id}` | Update user details, roles, and permissions |
+| Delete User | DELETE | `/users/{user_id}` | Remove user                                 |
+
+> **Role-based access:** Only admin or specific roles can access protected endpoints.
+
+### Forgot Password
+
+| Action         | Method | Endpoint                 | Description              |
+| -------------- | ------ | ------------------------ | ------------------------ |
+| Request PIN    | POST   | `/users/forgot-password` | Sends PIN to user email  |
+| Reset Password | POST   | `/users/reset-password`  | Reset password using PIN |
+
+**Example using cURL:**
+
+```bash
+# Request PIN
+curl -X POST "http://127.0.0.1:8000/users/forgot-password" -H "Content-Type: application/json" -d '{"email":"user@example.com"}'
+
+# Reset Password
+curl -X POST "http://127.0.0.1:8000/users/reset-password" -H "Content-Type: application/json" -d '{"email":"user@example.com","pin":"123456","new_password":"newpass123"}'
+```
+
+---
+
+## ✔️ Features Already Implemented
+
+* Task CRUD operations
+* User CRUD by admin
+* Role & permission assignment for users and admin
+* Forgot password via email/PIN
+* JWT authentication
+
+---
+
+## 📝 License
+
+Open-source and free to use.
+
+Open-source and free to use.
